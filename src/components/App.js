@@ -12,7 +12,7 @@ export default class App extends Component {
 
     render() {
         const renderNav = ({location}) => {
-            return <Nav path = {location.pathname}/>
+            return <Nav />
         } 
         return (
             <div id = 'main'>

@@ -17,15 +17,15 @@ const Users = ({ users }) => {
               {
                 users.map((user) => {
                   return (
-                    <tr>
-                    <td>
-                        <Link to={`/users/${user.id}`}>
-                            {user.firstName} {user.lastName}
-                        </Link>
-                    </td>
-                    <td>{user.userName}</td>
-                    <td>{user.email}</td>
-                </tr>
+                    <tr key={user.id}>
+                        <td>
+                            <Link to={`/users/${user.id}`}>
+                                {user.firstName} {user.lastName}
+                            </Link>
+                        </td>
+                        <td>{user.userName}</td>
+                        <td>{user.email}</td>
+                    </tr>
                   )
                 })
               }
