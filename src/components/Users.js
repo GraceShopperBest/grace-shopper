@@ -1,18 +1,17 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const Users = ({ users }) => {
-    console.log('HERE ', users)
     return (
         <div className='usersContainer'>
         <h2>List of all users: </h2>
         <table className='users-list'>
             <tbody>
               <tr>
-                <th>FIRST NAME</th>
-                <th>LAST NAME</th>
+                <th>NAME</th>
                 <th>USERNAME</th>
+                <th>EMAIL</th>
               </tr>
               {
                 users.map((user) => {

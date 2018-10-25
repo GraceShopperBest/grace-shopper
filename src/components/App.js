@@ -4,6 +4,7 @@ import {getUsers} from './../reducers/UserReducer';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import Users from './Users';
 import Nav from './Nav';
+import User from './User';
 
 export default class App extends Component {
     componentDidMount(){
@@ -11,16 +12,14 @@ export default class App extends Component {
     }
 
     render() {
-        const renderNav = ({location}) => {
-            return <Nav />
-        } 
         return (
             <div id = 'main'>
-                    <Router>
+                <Router>
                     <div>
-                        <Route render={ renderNav } />
+                        <Route component={Nav} />
                         <Switch>
-                            <Route exact path='/users' component = {Users} />
+                            <Route exact path='/users' component={Users} />
+                            <Route path='/users/:id' component={User} />
                         </Switch> 
                     </div>
                 </Router>

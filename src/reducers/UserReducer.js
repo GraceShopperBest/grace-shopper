@@ -41,6 +41,8 @@ const getUsers = () => {
     };
 };
 
+const getUserById = (users, id) => users.find(user => user.id === id);
+
 const UserReducer = (state = [], action) => {
     switch(action.type){
         case GET_USERS:
@@ -62,5 +64,6 @@ export {
     getUsers,
     updateUser,
     addUser,
-    deleteUser
+    deleteUser,
+    getUserById
 }
