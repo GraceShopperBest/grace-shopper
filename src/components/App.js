@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import store from './../store';
 import {getUsers} from './../reducers/UserReducer';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
@@ -15,13 +15,13 @@ export default class App extends Component {
         return (
             <div id = 'main'>
                 <Router>
-                    <div>
-                        <Route component={Nav} />
+                    <Fragment>
+                        <Nav />
                         <Switch>
                             <Route exact path='/users' component={Users} />
                             <Route path='/users/:id' component={User} />
                         </Switch> 
-                    </div>
+                    </Fragment>
                 </Router>
             </div>
         )
