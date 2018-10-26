@@ -5,6 +5,7 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import Users from './Users';
 import Nav from './Nav';
 import User from './User';
+import Home from './Home';
 
 export default class App extends Component {
     componentDidMount(){
@@ -20,6 +21,7 @@ export default class App extends Component {
                         <Switch>
                             <Route exact path='/users' component={Users} />
                             <Route path='/users/:id' component={User} />
+                            <Route path='/' component={ Home } />
                         </Switch> 
                     </Fragment>
                 </Router>
