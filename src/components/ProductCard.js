@@ -12,6 +12,9 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ViewDetailsIcon from '@material-ui/icons/PageviewOutlined';
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
 
 class ProductCard extends React.Component {
   state = { expanded: false };
@@ -42,6 +45,11 @@ class ProductCard extends React.Component {
           <IconButton aria-label="Add to wish list">
             <FavoriteIcon />
           </IconButton>
+          <Link to={`/products/${product.id}`}>
+              <Button variant="contained" color="primary" className={classes.button}>
+                View Product
+              </Button>
+          </Link>
           <IconButton
             className={classnames(classes.expand, {
               [classes.expandOpen]: this.state.expanded,
