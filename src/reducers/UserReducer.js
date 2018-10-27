@@ -59,11 +59,11 @@ const UserReducer = (state = [], action) => {
     };
 };
 
-export default UserReducer;
 export { 
     getUsers,
     updateUser,
     addUser,
     deleteUser,
-    getUserById
+    getUserById,
+    UserReducer
 }

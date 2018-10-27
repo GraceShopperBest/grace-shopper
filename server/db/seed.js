@@ -17,6 +17,9 @@ const createUsers = () => {
             i++;
         }
     }
+
+    users.push({ firstName: "Grace", lastName: "Shopper", userName: "shopper", 
+        password: "admin", email: "admin@email.com", isAdmin: true})
     return users;
 }
 
