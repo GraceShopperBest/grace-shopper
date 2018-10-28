@@ -21,9 +21,10 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if((!prevProps.authenticatedUser.id && this.props.authenticatedUser.id) || 
-      (prevProps.authenticatedUser.id !== this.props.authenticatedUser.id)) {
+    if(this.props.authenticatedUser.id) {
+      if((!prevProps.authenticatedUser.id) || (prevProps.authenticatedUser.id !== this.props.authenticatedUser.id)) {
         this.props.getOrders(this.props.authenticatedUser.id)
+      }
     }
   }
 

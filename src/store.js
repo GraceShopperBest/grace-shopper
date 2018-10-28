@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 import { UserReducer, getUsers } from './reducers/UserReducer';
 import { productReducer, getProducts, getProduct, getCategories, getProductByCategory } from './reducers/products';
 import { ordersReducer, getOrders, createCart, getCart, placeOrder, 
-  createLineItemInCart, deleteLineItemFromCart, updateLineItemInCart } from './reducers/orders'
+  createLineItemInCart, deleteLineItemFromCart, updateLineItemInCart, resetOrders } from './reducers/orders'
 
 import {
   login,
@@ -37,6 +37,6 @@ const getCartWithItems = (orders, products) => {
 
 export default store;
 
-export { login, logout, exchangeTokenForAuth, getUsers, getProducts, getOrders, getCartWithItems, createCart, 
+export { login, logout, exchangeTokenForAuth, getUsers, getProducts, getOrders, getCartWithItems, createCart, resetOrders,
   placeOrder, createLineItemInCart, deleteLineItemFromCart, updateLineItemInCart, getCategories, getProductByCategory   };
 

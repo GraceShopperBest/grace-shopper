@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const GET_ORDERS = 'GET_ORDERS'
+const RESET_ORDERS = 'RESET_ORDERS'
 const CREATE_ORDER = 'CREATE_ORDER'
 const UPDATE_ORDER = 'UPDATE_ORDER'
 const CREATE_LINEITEM = 'CREATE_LINEITEM'
@@ -8,6 +9,7 @@ const DELETE_LINEITEM = 'DELETE_LINEITEM'
 const UPDATE_LINEITEM = 'UPDATE_LINEITEM'
 
 const _getOrders = (orders) => ({ type: GET_ORDERS, orders })
+const _resetOrders = () => ({ type: RESET_ORDERS })
 const _createOrder = (order) => ({ type: CREATE_ORDER, order })
 const _updateOrder = (order) => ({ type: UPDATE_ORDER, order })
 const _createLineItem = (cartId, lineItem) => ({ type: CREATE_LINEITEM, cartId, lineItem })
@@ -19,6 +21,12 @@ const getOrders = (userId) => {
         axios.get(`/api/users/${userId}/orders`)
             .then(response => response.data)
             .then(orders => dispatch(_getOrders(orders)))
+    }
+}
+
+const resetOrders = () => {
+    return (dispatch) => {
+        dispatch(_resetOrders())
     }
 }
 
@@ -67,6 +75,8 @@ const ordersReducer = (state = [], action) => {
     switch(action.type) {
         case GET_ORDERS:
             return action.orders
+        case RESET_ORDERS:
+            return []
         case CREATE_ORDER:
             return [...state, action.order]
         case UPDATE_ORDER:
@@ -91,4 +101,4 @@ const ordersReducer = (state = [], action) => {
 const getCart = (orders) => orders.find(order => order.type === 'CART' )
 
 export { ordersReducer, getOrders, createCart, getCart, placeOrder, createLineItemInCart,
-    deleteLineItemFromCart, updateLineItemInCart }
+    deleteLineItemFromCart, updateLineItemInCart, resetOrders }

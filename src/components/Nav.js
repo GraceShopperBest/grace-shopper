@@ -5,7 +5,7 @@ import { AppBar, Toolbar, IconButton, Button, Badge, InputBase, Menu, MenuItem }
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart'
 import SearchIcon from '@material-ui/icons/Search'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
-import { logout, getCartWithItems } from '../store'
+import { logout, getCartWithItems, resetOrders } from '../store'
 
 class Nav extends Component {
 
@@ -30,6 +30,7 @@ class Nav extends Component {
     handleLogout() {
         this.props.logout()
         this.handleProfileMenuClose()
+        this.props.resetOrders()
         this.props.history.push('/')
     }
 
@@ -102,7 +103,8 @@ const mapStateToProps = ({ orders, products, authenticatedUser }) => {
 
 const mapDispatchToProps = (dispatch ) => {
     return {
-        logout: () => dispatch(logout())
+        logout: () => dispatch(logout()),
+        resetOrders: () => dispatch(resetOrders())
     }
 }
 
