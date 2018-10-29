@@ -39,11 +39,12 @@ const createCart = (item, userId) => {
     }
 }
 
-const placeOrder = (order, userId) => {
+const placeOrder = (order, userId, history) => {
     return (dispatch) => {
         axios.put(`/api/users/${userId}/orders/${order.id}`, order)
             .then(response => response.data)
             .then(order => dispatch(_updateOrder(order)))
+            .then(() => history.push('/orderConfirmation'))
     }
 }
 

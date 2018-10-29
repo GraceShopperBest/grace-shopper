@@ -12,6 +12,7 @@ import Login from './Login';
 import RegisterUser from './RegisterUser';
 import AdminManagement from './AdminManagement';
 import Cart from './Cart'
+import OrderConfirmation from './OrderConfirmation'
 
 class App extends Component {
   componentDidMount() {
@@ -44,7 +45,8 @@ class App extends Component {
             <Route path="/adminManagement" component={AdminManagement} />
             <Route exact path="/products" component={Products} />
             <Route path="/products/:id" component={ProductDetails} />
-            <Route path="/cart" component={Cart} />
+            <Route path="/cart" render={({ history }) => <Cart history={history} /> } />
+            <Route exact path="/orderConfirmation" component={OrderConfirmation} />
             <Route exact path="/" component={Home} />
           </Switch>
         </Fragment>

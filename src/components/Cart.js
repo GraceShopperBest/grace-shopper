@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
-import { Typography, Grid, IconButton, Button } from '@material-ui/core'
+import { Typography, Grid, IconButton, Button, Table, TableHead, TableRow, TableBody, TableCell } from '@material-ui/core'
 import { Clear } from '@material-ui/icons'
 import ItemQuantity from './ItemQuantity'
 import { getCartWithItems, placeOrder, deleteLineItemFromCart, updateLineItemInCart } from '../store'
@@ -36,6 +36,63 @@ class Cart extends Component {
         const { handlePlaceOrder, handleRemoveFromCart, updateQuantity } = this
         const totalAmount = calculateTotalAmount(cart)
 
+        const shoppingCartDetails = () => {
+            return (
+                <Fragment>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Product</TableCell>
+                                <TableCell>Quantity</TableCell>
+                                <TableCell>Price Per Unit</TableCell>
+                                <TableCell>Total</TableCell>
+                                <TableCell></TableCell>
+                            </TableRow>
+                        </TableHead>             
+                        <TableBody>
+                        {
+                            cart.line_items.map(item => <TableRow key={item.id}>
+                                <TableCell >
+                                    <Typography variant="subheading">{item.product.title}</Typography>
+                                    <img src={item.product.imageUrl} style={{height: "20vh" }}/>
+                                </TableCell>
+                                <TableCell>
+                                    <ItemQuantity updateQuantity={updateQuantity} cartId={cart.id} itemId={item.id} 
+                                            quantity={item.quantity} price={item.product.price}/>
+                                </TableCell>
+                                <TableCell>
+                                    <Typography variant="subheading">{`$ ${item.product.price}`}</Typography>
+                                </TableCell>
+                                <TableCell>
+                                    <Typography variant="subheading">{`$ ${parseFloat(item.product.price * item.quantity).toFixed(2)}`}</Typography>
+                                </TableCell>
+                                <TableCell>
+                                    <IconButton onClick={() => handleRemoveFromCart(cart.id, item.id)} variant="outlined" color="secondary">
+                                        <Clear />
+                                    </IconButton> 
+                                </TableCell>
+                            </TableRow> 
+                            )
+                        }
+                        </TableBody>
+                    </Table>
+
+                    <Grid container style={{marginTop: "10vh", marginLeft: "80vw"}}>
+                        <Grid item xs>
+                            <Typography variant="subheading" style={{fontWeight: "bold"}}>
+                                {`Total Amount: $ ${parseFloat(totalAmount).toFixed(2)}`}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                    <Grid container style={{marginTop: "1vh", marginLeft: "80vw"}}>
+                        <Grid item xs>
+                            <Button onClick={handlePlaceOrder} variant="contained" color="default"> Place Order </Button>
+                        </Grid>
+                    </Grid>
+                </Fragment>
+            )
+        }
+
         return (
             <Fragment>
                 <Typography variant="title" style={{marginTop: "10vh", marginBottom: "5vh", fontWeight: "bold"}}>
@@ -49,55 +106,7 @@ class Cart extends Component {
             </Fragment>
         )
 
-        const shoppingCartDetails = () => {
-            return (
-                <Fragment>
-                    <Grid container justify="center" >
-                    {
-                        cart.line_items.map(item => 
-                            <Grid container key={item.id} style={{marginTop: "5vh"}}>
-                                <Grid container justify="center" style={{display:"flex"}} spacing={0}>
-                                    <Grid item xs>
-                                        <Typography variant="subheading">{item.product.title}</Typography>
-                                    </Grid>
-                                    <Grid item xs>
-                                        <img src={item.product.imageUrl} style={{height: "20vh" }}/>
-                                    </Grid>
-                                    <Grid item xs>
-                                        <ItemQuantity updateQuantity={updateQuantity} cartId={cart.id} itemId={item.id} 
-                                            quantity={item.quantity} price={item.product.price}/>
-                                    </Grid>
-                                    <Grid item xs>
-                                        <Typography variant="subheading">{`$ ${item.product.price}`}</Typography>
-                                    </Grid>
-                                    <Grid item xs>
-                                        <Typography variant="subheading">{`$ ${item.product.price * item.quantity}`}</Typography>
-                                    </Grid>
-                                    <Grid item xs>
-                                        <IconButton onClick={() => handleRemoveFromCart(cart.id, item.id)} variant="outlined" color="secondary">
-                                            <Clear />
-                                        </IconButton> 
-                                    </Grid>
-                                </Grid>          
-                        </Grid>
-                        )
-                    }
-                    </Grid>
-                    <Grid container style={{marginTop: "10vh"}}>
-                        <Grid item xs>
-                            <Typography variant="subheading" style={{fontWeight: "bold"}}>
-                                {`Total Amount: $ ${totalAmount}`}
-                            </Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid container style={{marginTop: "1vh"}}>
-                        <Grid item xs>
-                            <Button onClick={handlePlaceOrder} variant="contained" color="default"> Place Order </Button>
-                        </Grid>
-                    </Grid>
-                </Fragment>
-            )
-        }
+        
     }
 
 }
@@ -117,9 +126,9 @@ const mapStateToProps = ({ orders, products, authenticatedUser }) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, {history}) => {
     return {
-        placeOrder: (order, userId) => dispatch(placeOrder(order, userId)),
+        placeOrder: (order, userId) => dispatch(placeOrder(order, userId, history)),
         deleteLineItemFromCart: (cartId, itemId, userId) => dispatch(deleteLineItemFromCart(cartId, itemId, userId)),
         updateLineItemInCart: (cartId, quantity, itemId, price, userId) => 
             dispatch(updateLineItemInCart(cartId, { quantity, price }, itemId, userId)),
