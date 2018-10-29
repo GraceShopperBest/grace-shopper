@@ -33,7 +33,7 @@ class ProductCard extends React.Component {
         <Link to={`/products/${product.id}`}>
           <CardMedia
             className={classes.media}
-            image={product.imageUrl}
+            image={product.primaryImageUrl}
             title={product.title}
           />
         </Link>

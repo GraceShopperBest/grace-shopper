@@ -44,7 +44,12 @@ const createProducts = () => {
                 description: faker.lorem.paragraph(),
                 price: faker.commerce.price(),
                 inventory: faker.random.number({ min: 1, max: 10000}),
-                imageUrl: `https://picsum.photos/200/300/?image=${i}`,
+                primaryImageUrl: `https://picsum.photos/400/500/?image=${i}`,
+                images: [
+                    `https://picsum.photos/400/500/?image=${i+100}`,
+                    `https://picsum.photos/400/500/?image=${i+101}`,
+                    `https://picsum.photos/400/500/?image=${i+102}`,
+                ],
                 categories: getCategory(i)
             });
             i++;

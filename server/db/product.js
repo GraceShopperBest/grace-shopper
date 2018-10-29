@@ -36,9 +36,13 @@ const Product = conn.define('product', {
     }
   },
 
-  imageUrl: {
+  primaryImageUrl: {
     type: conn.Sequelize.STRING,
     defaultValue: '/public/book-default-cover.jpg',
+  },
+
+  images: {
+    type: conn.Sequelize.ARRAY(conn.Sequelize.STRING),
   },
 
   categories: {
