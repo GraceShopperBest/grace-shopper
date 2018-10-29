@@ -78,6 +78,7 @@ class ProductCard extends React.Component {
 const styles = theme => ({
     card: {
       maxWidth: 400,
+      backgroundColor: '#EEEEEE'
     },
     media: {
       height: 0,
