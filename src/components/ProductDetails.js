@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { withStyles, Card, CardHeader, CardContent, CardActions, Typography, Divider } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { getProductById } from './../utils';
-import ProductQty from './ProductQty';
 import { createCart, getCartWithItems, createLineItemInCart, updateLineItemInCart } from '../store'
 import ProductImageCarousel from './ProductImageCarousel';
+import ItemQuantity from './ItemQuantity'
 
 class ProductDetail extends Component {
     constructor(props) {
@@ -21,19 +21,20 @@ class ProductDetail extends Component {
         this.productQty[productId] = event.target.value
     }
 
-    handleAddToCart(productId, quantity) {
-        const item = { productId, quantity }
-        const { cart, createCart, createLineItemInCart, updateLineItemInCart } = this.props
+    handleAddToCart(productId, quantity, price) {
+        const item = { productId, quantity, price }
+        const { cart, createCart, createLineItemInCart, updateLineItemInCart, userId } = this.props
         if(!cart.id) {
-            createCart(item)
+            createCart(item, userId)
         }
         else {
             const lineItem = cart.line_items.find(i => i.productId === item.productId )
+            console.log(lineItem)
             if(!lineItem) {                 
-                createLineItemInCart(cart.id, item)
+                createLineItemInCart(cart.id, item, userId)
             }
             else {                  
-                updateLineItemInCart(cart.id, item.quantity, lineItem.id)
+                updateLineItemInCart(cart.id, (item.quantity + lineItem.quantity), lineItem.id, price, userId)
             }
         }
     }
@@ -67,7 +68,7 @@ class ProductDetail extends Component {
                             </Typography>
                         </CardContent>
                         <CardActions className={classes.actions} disableActionSpacing>
-                            <ProductQty addToCart={handleAddToCart} productId={product.id} />
+                            <ItemQuantity addToCart={handleAddToCart} productId={product.id} price={product.price} />
                         </CardActions>
                     </Card>
                     </div>
@@ -104,20 +105,20 @@ const styles = theme => ({
   });
 
 
-const mapStateToProps = ({orders, products}, {match}) => {
+const mapStateToProps = ({orders, products, authenticatedUser}, {match}) => {
     const id = parseInt(match.params.id)
     return {
         product: getProductById(products, id),
-        orders,
         cart: getCartWithItems(orders, products),
+        userId: authenticatedUser.id
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createCart: (item) => dispatch(createCart(item)),
-        createLineItemInCart: (cartId, item) => dispatch(createLineItemInCart(cartId, item)),
-        updateLineItemInCart: (cartId, quantity, itemId) => dispatch(updateLineItemInCart(cartId, { quantity }, itemId)),
+        createCart: (item, userId) => dispatch(createCart(item, userId)),
+        createLineItemInCart: (cartId, item, userId) => dispatch(createLineItemInCart(cartId, item, userId)),
+        updateLineItemInCart: (cartId, quantity, itemId, price, userId) => dispatch(updateLineItemInCart(cartId, { quantity, price }, itemId, userId)),
     }
 }
 

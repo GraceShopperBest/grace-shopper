@@ -86,7 +86,7 @@ class Cart extends Component {
                     </Grid>
                     <Grid container style={{marginTop: "1vh", marginLeft: "80vw"}}>
                         <Grid item xs>
-                            <Button onClick={handlePlaceOrder} variant="contained" color="default"> Place Order </Button>
+                            <Button onClick={handlePlaceOrder} variant="outlined" color="primary"> Place Order </Button>
                         </Grid>
                     </Grid>
                 </Fragment>

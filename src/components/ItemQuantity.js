@@ -34,8 +34,8 @@ class ItemQuantity extends Component {
 
     handleAddToCart() {
         const { quantity } = this.state
-        const { addToCart, productId } = this.props
-        addToCart(productId, quantity)
+        const { addToCart, productId, price } = this.props
+        addToCart(productId, quantity, price)
         this.setState({ quantity: 0 })
     }
 
@@ -63,7 +63,7 @@ class ItemQuantity extends Component {
                 {
                     !addToCart ? null
                         : <Grid item xs={2}>
-                            <Button onClick={() => handleAddToCart()} variant="outlined" color="default" disabled={!quantity}>
+                            <Button onClick={() => handleAddToCart()} variant="outlined" color="primary" disabled={!quantity}>
                                 Add To Cart
                             </Button>
                           </Grid>
