@@ -44,56 +44,60 @@ class Cart extends Component {
                 }
                 </Typography>
                 {
-                    !cart.line_items.length
-                        ? ""
-                        : <Fragment>
-                            <Grid container justify="center" >
-                            {
-                                cart.line_items.map(item => 
-                                    <Grid container key={item.id} style={{marginTop: "5vh"}}>
-                                        <Grid container justify="center" style={{display:"flex"}} spacing={0}>
-                                            <Grid item xs>
-                                                <Typography variant="subheading">{item.product.title}</Typography>
-                                            </Grid>
-                                            <Grid item xs>
-                                                <img src={item.product.imageUrl} style={{height: "20vh" }}/>
-                                            </Grid>
-                                            <Grid item xs>
-                                                <ItemQuantity updateQuantity={updateQuantity} cartId={cart.id} itemId={item.id} 
-                                                    quantity={item.quantity} price={item.product.price}/>
-                                            </Grid>
-                                            <Grid item xs>
-                                                <Typography variant="subheading">{`$ ${item.product.price}`}</Typography>
-                                            </Grid>
-                                            <Grid item xs>
-                                                <Typography variant="subheading">{`$ ${item.product.price * item.quantity}`}</Typography>
-                                            </Grid>
-                                            <Grid item xs>
-                                                <IconButton onClick={() => handleRemoveFromCart(cart.id, item.id)} variant="outlined" color="secondary">
-                                                    <Clear />
-                                                </IconButton> 
-                                            </Grid>
-                                        </Grid>          
-                                </Grid>
-                                )
-                            }
-                            </Grid>
-                            <Grid container style={{marginTop: "10vh"}}>
-                                <Grid item xs>
-                                    <Typography variant="subheading" style={{fontWeight: "bold"}}>
-                                        {`Total Amount: $ ${totalAmount}`}
-                                    </Typography>
-                                </Grid>
-                            </Grid>
-                            <Grid container style={{marginTop: "1vh"}}>
-                                <Grid item xs>
-                                    <Button onClick={handlePlaceOrder} variant="contained" color="default"> Place Order </Button>
-                                </Grid>
-                           </Grid>
-                            </Fragment>
+                    !cart.line_items.length ? "" : shoppingCartDetails()
                 }
             </Fragment>
         )
+
+        const shoppingCartDetails = () => {
+            return (
+                <Fragment>
+                    <Grid container justify="center" >
+                    {
+                        cart.line_items.map(item => 
+                            <Grid container key={item.id} style={{marginTop: "5vh"}}>
+                                <Grid container justify="center" style={{display:"flex"}} spacing={0}>
+                                    <Grid item xs>
+                                        <Typography variant="subheading">{item.product.title}</Typography>
+                                    </Grid>
+                                    <Grid item xs>
+                                        <img src={item.product.imageUrl} style={{height: "20vh" }}/>
+                                    </Grid>
+                                    <Grid item xs>
+                                        <ItemQuantity updateQuantity={updateQuantity} cartId={cart.id} itemId={item.id} 
+                                            quantity={item.quantity} price={item.product.price}/>
+                                    </Grid>
+                                    <Grid item xs>
+                                        <Typography variant="subheading">{`$ ${item.product.price}`}</Typography>
+                                    </Grid>
+                                    <Grid item xs>
+                                        <Typography variant="subheading">{`$ ${item.product.price * item.quantity}`}</Typography>
+                                    </Grid>
+                                    <Grid item xs>
+                                        <IconButton onClick={() => handleRemoveFromCart(cart.id, item.id)} variant="outlined" color="secondary">
+                                            <Clear />
+                                        </IconButton> 
+                                    </Grid>
+                                </Grid>          
+                        </Grid>
+                        )
+                    }
+                    </Grid>
+                    <Grid container style={{marginTop: "10vh"}}>
+                        <Grid item xs>
+                            <Typography variant="subheading" style={{fontWeight: "bold"}}>
+                                {`Total Amount: $ ${totalAmount}`}
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                    <Grid container style={{marginTop: "1vh"}}>
+                        <Grid item xs>
+                            <Button onClick={handlePlaceOrder} variant="contained" color="default"> Place Order </Button>
+                        </Grid>
+                    </Grid>
+                </Fragment>
+            )
+        }
     }
 
 }
