@@ -109,10 +109,9 @@ const mergeCartWithLocalCartOnLogin = (orders, localCart, userId) => {
 
   return (dispatch) => {
     
-    if (!orders || !localCart || !userId) return;
-
+    if (!orders || !localCart || !userId || !localCart.length) return;
     const cart = getCart(orders);
-    console.log(cart)
+
     let mergedItems = { cartId: cart && cart.id ? cart.id : undefined, changedItems: [], addedItems: []}
     
     if(!cart || !cart.line_items) {
@@ -131,15 +130,15 @@ const mergeCartWithLocalCartOnLogin = (orders, localCart, userId) => {
         return result
       }, mergedItems);
     }
-    console.log("merged cart...")
-    console.log(mergedItems)
+
     if(mergedItems.cartId) {
       dispatch(addMultipleLineItems(mergedItems, userId, dispatch))
+        .then(() => dispatch(resetLocalCart()))
     }
     else {
       dispatch(createCartWithMultipleLineItems(mergedItems, userId))
+        .then(() => dispatch(resetLocalCart()))
     }
-    resetLocalCart()
   }
 };
 

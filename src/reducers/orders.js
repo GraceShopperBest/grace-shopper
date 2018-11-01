@@ -18,7 +18,7 @@ const _updateLineItem = (cartId, lineItem) => ({ type: UPDATE_LINEITEM, cartId, 
 
 const getOrders = (userId) => {
     return (dispatch) => {
-        axios.get(`/api/users/${userId}/orders`)
+        return axios.get(`/api/users/${userId}/orders`)
             .then(response => response.data)
             .then(orders => dispatch(_getOrders(orders)))
     }
@@ -43,7 +43,7 @@ const addMultipleLineItems = (items, userId) => {
     return (dispatch) => {
         return axios.post(`/api/users/${userId}/orders/${items.cartId}`, items)
             .then(response => response.data)
-            .then(order => dispatch(_createOrder(order))) 
+            .then(order => dispatch(_updateOrder(order))) 
     }
 }
 
@@ -54,7 +54,8 @@ const createCartWithMultipleLineItems = (items, userId) => {
             .then((order) => {
                 const rest = items.addedItems.slice(1)
                 if(rest.length) {
-                    return axios.post(`/api/users/${userId}/orders/${order.id}`, {addedItems: rest})
+                    return axios.post(`/api/users/${userId}/orders/${order.id}`, {addedItems: rest, changedItems: []})
+                        .then(response => response.data)
                 }
                 return order
             }).then(order => dispatch(_createOrder(order))) 

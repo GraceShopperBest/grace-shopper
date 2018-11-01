@@ -74,8 +74,7 @@ router.post('/:id/orders/:orderId', async (req, res, next) => {
         ))
 
         const order = await Order.findById(req.params.orderId, { include: [ LineItem ] })
-        console.log(order)
-        res.send(201).send(order)
+        res.status(201).send(order)
     }
     catch(error) {
         next(error)

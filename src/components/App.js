@@ -32,13 +32,11 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { authenticatedUser, orders, localCart } = this.props
+    const { authenticatedUser } = this.props
     if (authenticatedUser.id) {
       if ( !prevProps.authenticatedUser.id || prevProps.authenticatedUser.id !== authenticatedUser.id) {
-        this.props.getOrders(authenticatedUser.id);
-      }
-      if(!prevProps.authenticatedUser.id && orders && localCart.length) {
-        this.props.mergeCartWithLocalCartOnLogin(orders, localCart, authenticatedUser.id)
+        this.props.getOrders(authenticatedUser.id)
+          .then(() => this.props.mergeCartWithLocalCartOnLogin(this.props.orders, this.props.localCart, authenticatedUser.id))
       }
     }
   }
@@ -77,9 +75,11 @@ class App extends Component {
   }
 }
 
-const mapStateToProps = ({ authenticatedUser }) => {
+const mapStateToProps = ({ authenticatedUser, orders, localCart }) => {
   return {
-    authenticatedUser
+    authenticatedUser,
+    orders,
+    localCart
   };
 };
 
@@ -88,7 +88,9 @@ const mapDispatchToProps = dispatch => {
     getUsers: () => dispatch(getUsers()),
     getProducts: () => dispatch(getProducts()),
     exchangeTokenForAuth: () => dispatch(exchangeTokenForAuth()),
-    getOrders: userId => dispatch(getOrders(userId)),
+    getOrders: userId => {
+      return dispatch(getOrders(userId))
+    },
     getReviews: () => dispatch(getReviews()),
     mergeCartWithLocalCartOnLogin: (orders, localCart, userId) => dispatch(mergeCartWithLocalCartOnLogin(orders, localCart, userId))
   };
