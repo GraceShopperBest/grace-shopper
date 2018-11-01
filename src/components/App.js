@@ -58,20 +58,14 @@ class App extends Component {
             <Route path="/register" component={RegisterUser} />
             <Route path="/registerSuccess" component={RegistrationSuccessful} />
             <Route path="/checkout" render={({ location, history }) => <Checkout location={location} history={history} />} />
-
-            {/*
-              authenticatedUser.isAdmin ? 
-                <Fragment>
-                  <Route exact path="/admins/user-create" component={ AdminTopNav } />
-                  <Route exact path="/admins/user-update" component={ AdminTopNav } />
-                  <Route exact path="/admins/product-create" component={ AdminTopNav } />
-                  <Route exact path="/admins/product-search" component={ AdminTopNav } />
-                  <Route exact path="/admins/product-catalogues" component={ AdminTopNav } />
-                  <Route exact path="/admins/orders" component={ AdminTopNav } />
-                  <Route exact path="/admins" component={ AdminTopNav } />
-                </Fragment>
-              : null
-            */}
+  
+            <Route exact path="/admins/user-create" component={ AdminTopNav } />
+            <Route exact path="/admins/user-update" component={ AdminTopNav } />
+            <Route exact path="/admins/product-create" component={ AdminTopNav } />
+            <Route exact path="/admins/product-search" component={ AdminTopNav } />
+            <Route exact path="/admins/product-catalogues" component={ AdminTopNav } />
+            <Route exact path="/admins/orders" component={ AdminTopNav } />
+            <Route exact path="/admins" component={ AdminTopNav } />
 
             <Route exact path="/products" component={Products} />
             <Route path="/products/:id" component={ProductDetails} />
