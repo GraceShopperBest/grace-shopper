@@ -81,10 +81,11 @@ class Cart extends Component {
                     <Grid container style={{marginTop: "1vh", marginLeft: "80vw"}}>
                         <Grid item xs>
                         {
-                            userId ? 
-                                <Button to={{pathname: "/checkout", state: {cart, totalAmount} }} component={Link}
+                            userId &&
+                                <Button to={{pathname: "/checkout", details: {cart, totalAmount} }} component={Link}
                                     variant="outlined" color="primary" component={Link}> Proceed to Checkout</Button>
-                                :
+                        }
+                        { !userId &&
                                 <Button to="/login" variant="outlined" color="primary" component={Link}> 
                                     Login here to Checkout</Button>
 
