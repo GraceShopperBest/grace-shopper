@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom';
 import { Typography, Grid, IconButton, Button, Table, TableHead, TableRow, TableBody, TableCell } from '@material-ui/core'
 import { Clear } from '@material-ui/icons'
 import ItemQuantity from './ItemQuantity'
-import { getCartWithItems, placeOrder, deleteLineItemFromCart, updateLineItemInCart } from '../store'
+import { getCartWithItems, deleteLineItemFromCart, updateLineItemInCart } from '../store'
 
 class Cart extends Component {
 
@@ -11,7 +12,6 @@ class Cart extends Component {
         super()
         this.updateQuantity = this.updateQuantity.bind(this)
         this.handleRemoveFromCart = this.handleRemoveFromCart.bind(this)
-        this.handlePlaceOrder = this.handlePlaceOrder.bind(this)
     }
 
    updateQuantity(quantity, cartId, price, itemId, productId) {
@@ -25,15 +25,9 @@ class Cart extends Component {
         this.props.deleteLineItemFromCart(cartId, itemId, userId, productId)
     }
 
-    handlePlaceOrder() {
-        const { id } = this.props.cart
-        const { userId } = this.props
-        this.props.placeOrder({ id, type: 'ORDER' }, userId)
-    }
-
     render() {
-        const { cart } = this.props
-        const { handlePlaceOrder, handleRemoveFromCart, updateQuantity } = this
+        const { cart, userId } = this.props
+        const { handleRemoveFromCart, updateQuantity } = this
         const totalAmount = calculateTotalAmount(cart)
 
         const shoppingCartDetails = () => {
@@ -86,7 +80,16 @@ class Cart extends Component {
                     </Grid>
                     <Grid container style={{marginTop: "1vh", marginLeft: "80vw"}}>
                         <Grid item xs>
-                            <Button onClick={handlePlaceOrder} variant="outlined" color="primary"> Place Order </Button>
+                        {
+                            userId ? 
+                                <Button to={{pathname: "/checkout", state: {cart, totalAmount} }} component={Link}
+                                    variant="outlined" color="primary" component={Link}> Proceed to Checkout</Button>
+                                :
+                                <Button to="/login" variant="outlined" color="primary" component={Link}> 
+                                    Login here to Checkout</Button>
+
+                        }
+                            
                         </Grid>
                     </Grid>
                 </Fragment>
@@ -126,9 +129,8 @@ const mapStateToProps = ({ orders, products, authenticatedUser, localCart }) => 
     }
 }
 
-const mapDispatchToProps = (dispatch, {history}) => {
+const mapDispatchToProps = (dispatch) => {
     return {
-        placeOrder: (order, userId) => dispatch(placeOrder(order, userId, history)),
         deleteLineItemFromCart: (cartId, itemId, userId, productId) => 
             dispatch(deleteLineItemFromCart(cartId, itemId, userId, productId)),
         updateLineItemInCart: (cartId, quantity, itemId, price, userId, productId) => 

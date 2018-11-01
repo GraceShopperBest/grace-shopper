@@ -19,6 +19,7 @@ import RegisterUser from './RegisterUser';
 import Cart from './Cart';
 import OrderConfirmation from './OrderConfirmation';
 import RegistrationSuccessful from './RegistrationSuccessful';
+import Checkout from './Checkout';
 import AdminTopNav from './Admin/AdminTopNav';
 
 
@@ -56,8 +57,9 @@ class App extends Component {
             />
             <Route path="/register" component={RegisterUser} />
             <Route path="/registerSuccess" component={RegistrationSuccessful} />
+            <Route path="/checkout" render={({ location, history }) => <Checkout location={location} history={history} />} />
 
-            {
+            {/*
               authenticatedUser.isAdmin ? 
                 <Fragment>
                   <Route exact path="/admins/user-create" component={ AdminTopNav } />
@@ -69,14 +71,11 @@ class App extends Component {
                   <Route exact path="/admins" component={ AdminTopNav } />
                 </Fragment>
               : null
-            }
+            */}
 
             <Route exact path="/products" component={Products} />
             <Route path="/products/:id" component={ProductDetails} />
-            <Route
-              path="/cart"
-              render={({ history }) => <Cart history={history} />}
-            />
+            <Route path="/cart" component={Cart} />
             <Route
               exact
               path="/orderConfirmation"
