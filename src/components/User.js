@@ -76,7 +76,7 @@ class User extends Component {
     }
 
     render() {
-        const { user, location } = this.props;
+        const { user } = this.props;
         const { handleUserArea, selected } = this;
         const { userArea } = this.state;
 
@@ -127,7 +127,7 @@ const mapStateToProps = ({ users }, { match }) => {
     const id = parseInt(match.params.id)
 
     return {
-        user: getUserById(users, id)
+        user: getUserById(users, id),
     }
 };
 

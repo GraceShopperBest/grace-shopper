@@ -10,17 +10,17 @@ import {
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Nav from './Nav';
-import Users from './Users';
 import User from './User';
 import Products from './Products';
 import ProductDetails from './ProductDetails';
 import Home from './Home';
 import Login from './Login';
 import RegisterUser from './RegisterUser';
-import AdminManagement from './AdminManagement';
 import Cart from './Cart';
 import OrderConfirmation from './OrderConfirmation';
 import RegistrationSuccessful from './RegistrationSuccessful';
+import AdminTopNav from './Admin/AdminTopNav';
+
 
 class App extends Component {
   componentDidMount() {
@@ -42,12 +42,13 @@ class App extends Component {
   }
 
   render() {
+    const { authenticatedUser } = this.props;
+
     return (
       <Router>
         <Fragment>
           <Route path="/" render={({ history }) => <Nav history={history} />} />
           <Switch>
-            <Route exact path="/users" component={Users} />
             <Route path="/users/:id" component={User} />
             <Route
               path="/login"
@@ -55,8 +56,22 @@ class App extends Component {
             />
             <Route path="/register" component={RegisterUser} />
             <Route path="/registerSuccess" component={RegistrationSuccessful} />
-            <Route path="/adminManagement" component={AdminManagement} />
-            <Route exact path="/products" component={Home} />
+
+            {
+              authenticatedUser.isAdmin ? 
+                <Fragment>
+                  <Route exact path="/admins/user-create" component={ AdminTopNav } />
+                  <Route exact path="/admins/user-update" component={ AdminTopNav } />
+                  <Route exact path="/admins/product-create" component={ AdminTopNav } />
+                  <Route exact path="/admins/product-search" component={ AdminTopNav } />
+                  <Route exact path="/admins/product-catalogues" component={ AdminTopNav } />
+                  <Route exact path="/admins/orders" component={ AdminTopNav } />
+                  <Route exact path="/admins" component={ AdminTopNav } />
+                </Fragment>
+              : null
+            }
+
+            <Route exact path="/products" component={Products} />
             <Route path="/products/:id" component={ProductDetails} />
             <Route
               path="/cart"

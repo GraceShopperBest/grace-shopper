@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import { updateUser } from './../reducers/UserReducer';
+import { updateUser } from '../../../reducers/UserReducer';
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
@@ -207,13 +207,14 @@ render() {
         <br/>
         <br/>
 
-    <Button
-        type="submit"
-        variant="contained"
-        color="primary" 
-    >
-        Save
-    </Button>
+        <Button
+            type="submit"
+            variant="contained"
+            color="primary" 
+            // className={classes.button}
+        >
+            Save
+        </Button>
 
         </form>
 
@@ -227,14 +228,22 @@ render() {
 
 }
 
+const mapStateToProps = (users, { match }) => {
+  const id = +match.params.id;
 
-const mapDispatchToProps = dispatch => {
-return {
-    onUpdateUser: (user) => dispatch(updateUser(user))
+  return {
+    user: users.find(user => user.id === id)
   }
 }
 
-export default connect(null, mapDispatchToProps)(UserInfo);
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onUpdateUser: (user) => dispatch(updateUser(user))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserInfo);
 
 
 

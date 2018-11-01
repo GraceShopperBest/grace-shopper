@@ -52,7 +52,7 @@ class Nav extends Component {
                         <MenuItem to={`/users/${authenticatedUser.id}/myaccount`} component={Link} onClick={handleProfileMenuClose} >Account</MenuItem>
                         {
                             authenticatedUser.isAdmin && 
-                            <MenuItem to={`/adminManagement`} component={Link} onClick={handleProfileMenuClose} >Admin Management</MenuItem>
+                            <MenuItem to={`/admins`} component={Link} onClick={handleProfileMenuClose} >Admin Management</MenuItem>
                         }
                         <MenuItem onClick={handleLogout} >Logout</MenuItem>
                     </Menu>
