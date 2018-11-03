@@ -134,7 +134,6 @@ class Cart extends Component {
                     <Grid
                         container
                         direction="column"
-                        alignItems="center"
                         justify="flex-start"
                         spacing={8}
                         style={{ marginTop: "5vh", marginBottom: "5vh", width: "250px"}}

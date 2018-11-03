@@ -243,8 +243,6 @@ class Cart extends Component {
                         container
                         direction="column"
                         justify="center"
-                        alignItmes="center"
-                        spaceing={2}
                         style={{ width: "300px" }}
                     >
 
@@ -282,8 +280,6 @@ class Cart extends Component {
                 <Grid
                     container
                     justify="center"
-                    alignItems="flex-start"
-                    spacing={2}
                     style={{ marginTop: "10vh", marginLeft: "20px" }}
                 >
 
