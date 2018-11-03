@@ -18,6 +18,7 @@
     "express": "^4.16.3",
     "faker": "^4.1.0",
     "jwt-simple": "^0.5.5",
+    "material-ui-image": "^3.0.1",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.5",
     "pg": "^7.4.3",

@@ -73,8 +73,13 @@ class ProductDetail extends Component {
       return (arr.reduce((a, b) => a + b, 0) / arr.length).toFixed(2);
     };
 
-    const images = product.images;
-    images.unshift(product.primaryImageUrl);
+    let images;
+    product.images ? images = product.images : images = []
+    if(!images || images.length === 0){
+      images.push(product.primaryImageUrl)
+    } else {
+      images.unshift(product.primaryImageUrl);
+    }
     return (
       <Fragment>
         <div className={classes.container}>

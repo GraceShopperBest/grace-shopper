@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Card, CardMedia } from '@material-ui/core';
+import Image from 'material-ui-image';
 import { withStyles } from '@material-ui/core/styles';
 import MobileStepper from '@material-ui/core/MobileStepper';
 import Button from '@material-ui/core/Button';
@@ -36,6 +38,19 @@ class ProductImageCarousel extends Component {
         const { classes, theme, images } = this.props;
         const { activeStep } = this.state;
         const maxSteps = images.length;
+        if(images.length === 1){
+            return (
+                // <Card className={classes.card}>
+                //     <CardMedia
+                //         className={classes.media}
+                //         image={images[0]}
+                //         />
+                // </Card>
+                <Image
+                    src={images[0]}
+                />
+            )
+        }
         return (
         <div className={classes.root}>
             <AutoPlaySwipeableViews
