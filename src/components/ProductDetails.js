@@ -24,15 +24,7 @@ import Reviews from './Reviews';
 class ProductDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      product: this.props.product,
-    };
     this.handleAddToCart = this.handleAddToCart.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(event, productId) {
-    this.productQty[productId] = event.target.value;
   }
 
   handleAddToCart(productId, quantity, price) {
@@ -66,12 +58,15 @@ class ProductDetail extends Component {
   }
 
   render() {
-    const { classes, reviews } = this.props;
-    const { product } = this.state;
+    const { classes, reviews, product } = this.props;
     const { handleAddToCart } = this;
+
+    if(!product) return null;
+
     const findReviews = reviews.filter(
       review => review.productId === product.id
     );
+
     const averageRating = reviews => {
       let arr = [];
       reviews.forEach(review => arr.push(review.rating));
