@@ -11,7 +11,10 @@ const Product = conn.define('product', {
       notEmpty: true
     }
   },
-
+  author: {
+    type: conn.Sequelize.STRING,
+    defaultValue: "Anonymous"
+  },
   description: {
     type: conn.Sequelize.TEXT,
     allowNull: false,

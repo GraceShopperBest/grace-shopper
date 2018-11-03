@@ -88,7 +88,7 @@ class ProductDetail extends Component {
           </div>
           <div style={{ gridColumnEnd: 'span 6' }}>
             <Card className={classes.card}>
-              <CardHeader title={product.title} subheader="author TODO" />
+              <CardHeader title={product.title} subheader={product.author} />
               <CardContent>
                 <Typography
                   component="p"

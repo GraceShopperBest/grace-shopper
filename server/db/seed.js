@@ -51,9 +51,12 @@ const createProducts = () => {
   while (i < NO_OF_PRODUCTS) {
     const title = faker.lorem.words();
     const price = faker.commerce.price();
+    const firstName = faker.name.firstName();
+    const lastName = faker.name.lastName();
     if (!products.find(product => product.title === title) && price > 0.01) {
       products.push({
         title,
+        author: `${firstName} ${lastName}`,
         description: faker.lorem.paragraph(),
         price,
         inventory: faker.random.number({ min: 1, max: 10000 }),

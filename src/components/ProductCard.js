@@ -28,7 +28,7 @@ class ProductCard extends React.Component {
       <Card className={classes.card}>
         <CardHeader
           title={product.title}
-          subheader="author"
+          subheader={product.author}
         />
         <Link to={`/products/${product.id}`}>
           <CardMedia
