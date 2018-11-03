@@ -40,12 +40,6 @@ class ProductImageCarousel extends Component {
         const maxSteps = images.length;
         if(images.length === 1){
             return (
-                // <Card className={classes.card}>
-                //     <CardMedia
-                //         className={classes.media}
-                //         image={images[0]}
-                //         />
-                // </Card>
                 <Image
                     src={images[0]}
                 />
