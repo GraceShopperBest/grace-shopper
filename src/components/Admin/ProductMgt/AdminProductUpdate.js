@@ -11,27 +11,24 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 
-
-
-
 class AdminProductUpdate extends Component {
-
   constructor() {
     super();
     this.state = {
       product: {
         title: '',
         description: '',
+        author: '',
         primaryImageUrl: '',
         images: [],
         price: '',
         inventory: '',
-        categories: ''
+        categories: '',
       },
       success: '',
-      error: ''
-    }
-  
+      error: '',
+    };
+
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleImages = this.handleImages.bind(this);
@@ -40,12 +37,22 @@ class AdminProductUpdate extends Component {
 
   componentDidMount() {
     const { product } = this.props;
-    this.setState({ product } )
+    this.setState({ product });
+  }
+  
+  componentDidUpdate(prevProps) {
+    const { product } = this.props;
+
+    if(prevProps !== this.props) {
+      this.setState({ product })
+    }
   }
 
   handleChange(event) {
-    const product = Object.assign({}, this.state.product, { [event.target.name]: event.target.value })
-    this.setState({ product })
+    const product = Object.assign({}, this.state.product, {
+      [event.target.name]: event.target.value,
+    });
+    this.setState({ product });
   }
 
   handleSubmit(event) {
@@ -53,17 +60,16 @@ class AdminProductUpdate extends Component {
     const { product } = this.state;
 
     event.preventDefault();
-    onUpdateProduct(product)
-      .then(() => {
-        this.setState({ success: 'Product updated successfully!' })
-      })
-      .catch(error => this.setState({ error: 'An error has occurred.' }));
+    onUpdateProduct(product).then(() => {
+      this.setState({ success: 'Product updated successfully!' });
+    });
+    //.catch(error => this.setState({ error: 'An error has occurred.' }));
   }
 
   handleDelete(product) {
     const { onDeleteProduct, history } = this.props;
 
-    onDeleteProduct(product)
+    onDeleteProduct(product);
   }
 
   handleImages() {
@@ -71,77 +77,81 @@ class AdminProductUpdate extends Component {
     const _images = [];
 
     images.forEach((image, idx) => {
-      const _image = document.getElementById(`image${ idx }`).value;
+      const _image = document.getElementById(`image${idx}`).value;
       _images.push(_image);
-    })
+    });
 
-    const product = Object.assign({}, this.state.product, { images: _images })
-    this.setState({ product })
+    const product = Object.assign({}, this.state.product, { images: _images });
+    this.setState({ product });
   }
-
 
   render() {
     const { handleChange, handleSubmit, handleDelete, handleImages } = this;
-    const { success, error } = this.state;
-    const { title, description, primaryImageUrl, images, price, inventory, categories } = this.state.product;
+    const { product, success, error } = this.state;
+    const { title, description, author, primaryImageUrl, images, price, inventory, categories } = this.state.product;
+
+    if(!product) {
+      return null
+    }
 
     return (
-      <Fragment>
 
-        <Typography
-          variant="h2"
-          gutterBottom
-          style={{ color: 'dodgerblue' }}
-        >
+      <Fragment>
+        <Typography variant="h2" gutterBottom style={{ color: 'dodgerblue' }}>
           Update Product
         </Typography>
 
         <Typography
           variant="subtitle1"
-          style={{ color: 'green', marginLeft: "25px" }}
-          gutterBottom>
-            { success }
-          </Typography>
-        
+          style={{ color: 'green', marginLeft: '25px' }}
+          gutterBottom
+        >
+          {success}
+        </Typography>
+
         <Typography
           variant="subtitle1"
-          style={{ color: 'red', marginLeft: "25px" }}
-          gutterBottom>
-            { error }
+          style={{ color: 'red', marginLeft: '25px' }}
+          gutterBottom
+        >
+          {error}
         </Typography>
 
         <br />
         <br />
 
-        <form onSubmit={ handleSubmit }>
-
-        <Paper elevation={5} style={{backgroundColor: '#FFFFFF', padding: '10px', width: '900px' }}>
-
-          <Grid
-            container
-            justify="flex-start"
-            spacing={16}
-            style={{ marginLeft: "20px", width: "700px" }}
+        <form onSubmit={handleSubmit}>
+          <Paper
+            elevation={5}
+            style={{
+              backgroundColor: '#FFFFFF',
+              padding: '10px',
+              width: '900px',
+            }}
           >
+            <Grid
+              container
+              justify="flex-start"
+              spacing={16}
+              style={{ marginLeft: '20px', width: '700px' }}
+            >
+              <Grid item>
+                <TextField
+                  required
+                  type="url"
+                  name="primaryImageUrl"
+                  label="primary image (URL only)"
+                  margin="normal"
+                  variant="outlined"
+                  onChange={handleChange}
+                  value={primaryImageUrl}
+                  style={{ width: '700px' }}
+                />
+              </Grid>
 
-            <Grid item>
-              <TextField
-                required
-                type="url"
-                name="primaryImageUrl"
-                label="primary image (URL only)"
-                margin="normal"
-                variant="outlined"
-                onChange={ handleChange }
-                value={ primaryImageUrl }
-                style={{ width: "700px" }}
-              />
-            </Grid>
-
-            {
-              images.map((image, idx) => {
+              {images.map((image, idx) => {
                 return (
-                  <Grid item key={ idx }>
+                  <Grid item key={idx}>
                     <TextField
                       required
                       type="url"
@@ -150,9 +160,9 @@ class AdminProductUpdate extends Component {
                       label={`image-${idx} (URL only)`}
                       margin="normal"
                       variant="outlined"
-                      onChange={ handleImages }
-                      value={ image }
-                      style={{ width: "700px" }}
+                      onChange={handleImages}
+                      value={image}
+                      style={{ width: '700px' }}
                     />
                   </Grid>
                 )
@@ -163,6 +173,7 @@ class AdminProductUpdate extends Component {
               src={ primaryImageUrl ? primaryImageUrl : null }
               style={{
                   width: "25%",
+                  height: "25%",
                   marginLeft: "10px",
                   border: primaryImageUrl ? "3px solid red" : ''
               }}
@@ -174,7 +185,7 @@ class AdminProductUpdate extends Component {
                   <img
                     key={ idx }
                     src={ image ? image : null }
-                    style={{ width: "25%", marginLeft: "10px" }}
+                    style={{ width: "25%", height: "25%", marginLeft: "10px" }}
                   />
   
                 )
@@ -198,8 +209,9 @@ class AdminProductUpdate extends Component {
               />
             </Grid>
 
-            {/* <Grid item>
+            <Grid item>
               <TextField
+                required
                 name="author"
                 label="author"
                 margin="normal"
@@ -208,157 +220,162 @@ class AdminProductUpdate extends Component {
                 value={ author }
                 style={{ width: "700px" }}
               />
-            </Grid> */}
-
-            <Grid item>
-              <TextField
-                id="filled-multiline-static"
-                required
-                multiline
-                rows="5"
-                name="description"
-                label="description"
-                margin="normal"
-                variant="outlined"
-                onChange={ handleChange }
-                value={ description }
-                style={{ width: "700px" }}
-              />
             </Grid>
 
-          </Grid>
+              <Grid item>
+                <TextField
+                  id="filled-multiline-static"
+                  required
+                  multiline
+                  rows="5"
+                  name="description"
+                  label="description"
+                  margin="normal"
+                  variant="outlined"
+                  onChange={handleChange}
+                  value={description}
+                  style={{ width: '700px' }}
+                />
+              </Grid>
+            </Grid>
+          </Paper>
 
-        </Paper>
+          <br />
+          <br />
 
-        <br />
-        <br />
-
-        <Paper elevation={5} style={{backgroundColor: '#FFFFFF', padding: '10px', width: '900px'}}>
-
-          <Grid
-            container
-            justify="flex-start"
-            spacing={16}
-            style={{ marginLeft: "20px", width: "700px" }}
+          <Paper
+            elevation={5}
+            style={{
+              backgroundColor: '#FFFFFF',
+              padding: '10px',
+              width: '900px',
+            }}
           >
+            <Grid
+              container
+              justify="flex-start"
+              spacing={16}
+              style={{ marginLeft: '20px', width: '700px' }}
+            >
+              <Grid item>
+                <TextField
+                  required
+                  type="number"
+                  step="0.01"
+                  name="price"
+                  placeholder="$0.00"
+                  min="0.01"
+                  label="price"
+                  margin="normal"
+                  variant="outlined"
+                  onChange={handleChange}
+                  value={price}
+                  style={{ width: '200px' }}
+                />
+              </Grid>
 
-            <Grid item>
-              <TextField
-                required
-                type="number"
-                step="0.01"
-                name="price"
-                placeholder="$0.00"
-                min="0.01"
-                label="price"
-                margin="normal"
-                variant="outlined"
-                onChange={ handleChange }
-                value={ price }
-                style={{ width: "200px" }}
-              />
+              <Grid item>
+                <TextField
+                  required
+                  name="inventory"
+                  type="number"
+                  step="1"
+                  placeholder="0"
+                  min="0"
+                  label="inventory"
+                  margin="normal"
+                  variant="outlined"
+                  onChange={handleChange}
+                  value={inventory}
+                  style={{ width: '200px' }}
+                />
+              </Grid>
             </Grid>
+          </Paper>
 
-            <Grid item>
-              <TextField
-                required
-                name="inventory"
-                type="number"
-                step="1"
-                placeholder="0"
-                min="0"
-                label="inventory"
-                margin="normal"
-                variant="outlined"
-                onChange={ handleChange }
-                value={ inventory }
-                style={{ width: "200px" }}
-              />
-            </Grid>
+          <br />
+          <br />
 
-          </Grid>
-
-        </Paper>
-
-        <br />
-        <br />
-
-        <Paper elevation={5} style={{backgroundColor: '#FFFFFF', padding: '10px', width: '900px' }}>
-
-          <Grid
-            container
-            justify="flex-start"
-            spacing={16}
-            style={{ marginLeft: "20px", width: "700px" }}
+          <Paper
+            elevation={5}
+            style={{
+              backgroundColor: '#FFFFFF',
+              padding: '10px',
+              width: '900px',
+            }}
           >
+            <Grid
+              container
+              justify="flex-start"
+              spacing={16}
+              style={{ marginLeft: '20px', width: '700px' }}
+            >
+              <Grid item>
+                <TextField
+                  required
+                  name="categories"
+                  label="categories (separated by comma + space)"
+                  margin="normal"
+                  variant="outlined"
+                  onChange={handleChange}
+                  value={categories}
+                  style={{ width: '700px' }}
+                />
+              </Grid>
+            </Grid>
+          </Paper>
 
-          <Grid item>
-            <TextField
-              required
-              name="categories"
-              label="categories (separated by comma + space)"
-              margin="normal"
-              variant="outlined"
-              onChange={ handleChange }
-              value={ categories }
-              style={{ width: "700px" }}
-            />
-          </Grid>
+          <br />
+          <br />
 
-          </Grid>
-
-        </Paper>
-
-        <br />
-        <br />
-
-        <Button
+          <Button
             type="submit"
             variant="contained"
             color="primary"
             style={{ width: '100px' }}
-        >
-          Submit
-        </Button>
+          >
+            Submit
+          </Button>
 
-        <Button
+          <Button
             type="button"
             variant="contained"
             color="secondary"
-            style={{ width: '100px', marginLeft: "10px" }}
-            onClick={ () => handleDelete(this.state.product) }
-        >
-          Delete
-          <DeleteIcon />
-        </Button>
+            style={{ width: '100px', marginLeft: '10px' }}
+            onClick={() => handleDelete(this.state.product)}
+          >
+            Delete
+            <DeleteIcon />
+          </Button>
 
-        <br />
-        <br />
-
+          <br />
+          <br />
         </form>
-
       </Fragment>
-    )
+    );
   }
-
-
 }
 
 const mapStateToProps = ({ products }, { match }) => {
   const id = +match.params.id;
-  const product = getProductById(products, id);
+
+  const product = getProductById(products, id)
+  
+  console.log(products)
 
   return {
-    product
-  }
-}
+    product,
+  };
+};
 
 const mapDispatchToProps = (dispatch, { history }) => {
-
   return {
-    onUpdateProduct: (product) => dispatch(updateProduct(product)),
-    onDeleteProduct: (product) => dispatch(deleteProduct(product, history))
-  }
-}
+    onUpdateProduct: product => dispatch(updateProduct(product)),
+    onDeleteProduct: product => dispatch(deleteProduct(product, history)),fs
+  };
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(AdminProductUpdate);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(AdminProductUpdate);

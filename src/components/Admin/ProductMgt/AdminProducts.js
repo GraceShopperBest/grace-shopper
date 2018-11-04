@@ -169,7 +169,7 @@ class AdminProductListing extends Component {
                                         component="th"
                                         scope="row"
                                     >
-                                        ---
+                                        { product.author }
                                     </CustomTableCell>
                                     
                                     <CustomTableCell

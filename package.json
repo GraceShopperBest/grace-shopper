@@ -6,6 +6,7 @@
   "dependencies": {
     "@material-ui/core": "^3.1.1",
     "@material-ui/icons": "^3.0.1",
+    "@material-ui/lab": "^3.0.0-alpha.22",
     "@material/grid-list": "^0.40.1",
     "axios": "^0.18.0",
     "babel-core": "^6.26.3",

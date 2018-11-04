@@ -7,7 +7,7 @@ import {
   CardContent,
   CardActions,
   Typography,
-  Divider,
+  Divider
 } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { getProductById } from './../utils';
@@ -97,7 +97,7 @@ class ProductDetail extends Component {
                 >
                   Price: ${product.price}
                 </Typography>
-                <Divider />
+                <Divider className={classes.divider}/>
                 <Typography paragraph variant="subheading">
                   Average Rating:{' '}
                   {findReviews.length === 0

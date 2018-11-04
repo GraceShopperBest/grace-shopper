@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import AdminProductCreate from './AdminProductCreate';
 import AdminProducts from './AdminProducts';
 import AdminProductUpdate from './AdminProductUpdate';
-import AdminCatalogues from './AdminCatalogues';
-
 
 import { Grid , List, ListItem, ListItemText} from '@material-ui/core'
 
@@ -20,7 +18,6 @@ class AdminProductMain extends Component {
     }
 
     this.handleAdminArea = this.handleAdminArea.bind(this);
-    // this.selected = this.selected.bind(this);
   }
 
     componentDidMount() {
@@ -41,10 +38,31 @@ class AdminProductMain extends Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        const { location } = this.props;
+        if(prevProps !== this.props){
+
+            // loads correct admin area on refresh depending on URL
+            if(location.pathname.includes('admins/product-create')){
+                this.setState({ adminArea: 'product-create' })
+            }
+            else if(location.pathname.includes('admins/products/')) {
+                this.setState({ adminArea: 'product-update' })
+            }
+            else if(location.pathname.includes('admins/product-search')) {
+                this.setState({ adminArea: 'product-search' })
+            }
+            else if(location.pathname.includes('admins/product-catalogues')) {
+                this.setState({ adminArea: 'catalogues' })
+            }
+        }
+    }
+
   // returns Component to render in main area (to the right) when user area button is clicked
   handleAdminArea(adminArea) {
     const { match } = this.props;
         
+
     switch(adminArea) {
         case 'product-create':
             return <AdminProductCreate/>
@@ -53,7 +71,11 @@ class AdminProductMain extends Component {
             return <AdminProducts />
 
         case 'product-update':
-            return <AdminProductUpdate location={ location } history={ history } match={ match } />
+            return <AdminProductUpdate
+                location={ location }
+                history={ history }
+                match={ match }
+            />
     }
 
   }

@@ -1,7 +1,16 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import AdminUserUpdate from './AdminUserUpdate';
+import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 const searchUsers = (users, search) => {
   // creates regex pattern, to search for -
@@ -17,7 +26,17 @@ const searchUsers = (users, search) => {
         .search(pattern) !== -1
   );
 };
-
+const CustomTableCell = withStyles(theme => ({
+  head: {
+    backgroundColor: 'dodgerblue',
+    color: theme.palette.common.white,
+    fontSize: 18,
+  },
+  body: {
+    fontSize: 18,
+    backgroundColor: 'white',
+  },
+}))(TableCell);
 class AdminUsers extends Component {
   constructor(props) {
     super(props);
@@ -59,48 +78,105 @@ class AdminUsers extends Component {
 
   render() {
     const { handleChange, handleSubmit, handleShowAllUsers } = this;
-    const { users } = this.props;
+    const { search } = this.state;
+    const { users } = search !== null ? this.state : this.props;
     return (
       <Fragment>
-        <h2>Grace Shopper Users</h2>
+        <Typography variant="h2" gutterBottom style={{ color: 'dodgerblue' }}>
+          Grace Shopper Users
+        </Typography>
 
         <form onSubmit={handleSubmit}>
-          <label>Search for user:</label>
-          <input type="text" name="search" onChange={handleChange} />
-          <button type="submit">Search</button>
-
-          <button type="button" onClick={() => handleShowAllUsers()}>
-            Show All users
-          </button>
+          <Grid
+            container
+            alignItems="center"
+            alignContent="flex-start"
+            spacing={16}
+          >
+            <Grid item>
+              <TextField
+                name="search"
+                placeholder="search..."
+                margin="normal"
+                variant="filled"
+                onChange={handleChange}
+                style={{ width: '300px' }}
+              />
+            </Grid>
+            <Grid item>
+              <Button type="submit" variant="contained" color="primary">
+                Search
+              </Button>
+            </Grid>
+            <Grid item>
+              <Button
+                type="button"
+                variant="contained"
+                color="secondary"
+                onClick={() => handleShowAllUsers()}
+              >
+                Show All
+              </Button>
+            </Grid>
+          </Grid>
         </form>
 
         <br />
         <br />
 
-        <table>
-          <tbody>
-            <tr>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Username</th>
-              <th>Email</th>
-            </tr>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <CustomTableCell>First Name</CustomTableCell>
+              <CustomTableCell style={{ textAlign: 'center' }}>
+                Last Name
+              </CustomTableCell>
+              <CustomTableCell style={{ textAlign: 'center' }}>
+                Username
+              </CustomTableCell>
+              <CustomTableCell style={{ textAlign: 'center' }}>
+                Email
+              </CustomTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {users.map(user => {
               return (
-                <tr key={user.id}>
-                  <td>
-                    <Link to={`users/${user.id}`} state={user}>
+                <TableRow key={user.id}>
+                  <TableCell component="th" scope="row">
+                    <Link
+                      to={`/admins/users/${user.id}`}
+                      style={{ textDecoration: 'none' }}
+                    >
                       {user.firstName}
                     </Link>
-                  </td>
-                  <td>{user.lastName}</td>
-                  <td>{user.userName}</td>
-                  <td>{user.email}</td>
-                </tr>
+                  </TableCell>
+                  <TableCell
+                    style={{ textAlign: 'center' }}
+                    component="th"
+                    scope="row"
+                  >
+                    {user.lastName}
+                  </TableCell>
+                  <TableCell
+                    style={{ textAlign: 'center' }}
+                    component="th"
+                    scope="row"
+                  >
+                    {user.userName}
+                  </TableCell>
+                  <TableCell
+                    style={{ textAlign: 'center' }}
+                    component="th"
+                    scope="row"
+                  >
+                    {user.email}
+                  </TableCell>
+                </TableRow>
               );
             })}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </Fragment>
     );
   }

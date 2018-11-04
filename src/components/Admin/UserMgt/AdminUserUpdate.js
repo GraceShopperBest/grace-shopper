@@ -3,10 +3,14 @@ import { connect } from 'react-redux';
 
 import { updateUser, deleteUser } from '../../../store';
 
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+import {
+  Grid,
+  TextField,
+  Typography,
+  Button,
+  Checkbox,
+  FormControlLabel,
+} from '@material-ui/core';
 
 class AdminUserUpdate extends Component {
   constructor(props) {
@@ -19,6 +23,7 @@ class AdminUserUpdate extends Component {
       userName: user ? user.userName : '',
       password: user ? user.password : '',
       address: user ? user.address : '',
+      isAdmin: user ? user.isAdmin : 'false',
     };
 
     this.onChange = this.onChange.bind(this);
@@ -34,6 +39,7 @@ class AdminUserUpdate extends Component {
         userName: this.props.user.userName,
         password: this.props.user.password,
         address: this.props.user.address,
+        isAdmin: this.props.user.isAdmin,
       });
     }
   }
@@ -53,6 +59,7 @@ class AdminUserUpdate extends Component {
         userName: this.state.userName,
         password: this.state.password,
         address: this.state.address,
+        isAdmin: this.state.isAdmin,
       })
       .then(() => this.props.history.push('/admins/users'));
   }
@@ -82,6 +89,7 @@ class AdminUserUpdate extends Component {
       userName,
       password,
       address,
+      isAdmin,
     } = this.state;
 
     return (
@@ -177,6 +185,15 @@ class AdminUserUpdate extends Component {
             variant="filled"
             value={password}
             onChange={onChange}
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={isAdmin}
+                onChange={e => this.setState({ isAdmin: !isAdmin })}
+              />
+            }
+            label="Is Admin?"
           />
 
           {/* <Grid container justify="flex-start" spacing={16}>

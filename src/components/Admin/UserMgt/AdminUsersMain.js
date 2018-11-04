@@ -16,7 +16,7 @@ class AdminUsersMain extends Component {
   constructor() {
     super();
     this.state = {
-      adminArea: 'user-create', // determines which Component is rendered in main area to the right
+      adminArea: 'users', // determines which Component is rendered in main area to the right
     };
 
     this.handleAdminArea = this.handleAdminArea.bind(this);
@@ -24,10 +24,10 @@ class AdminUsersMain extends Component {
 
   componentDidMount() {
     const { location } = this.props;
-    if (location.pathname.includes('admins/user-create')) {
-      this.setState({ adminArea: 'user-create' });
-    } else if (location.pathname.includes('admins/users')) {
+    if (location.pathname.includes('admins/users')) {
       this.setState({ adminArea: 'users' });
+    } else if (location.pathname.includes('admins/user-create')) {
+      this.setState({ adminArea: 'user-create' });
     }
   }
 
@@ -35,10 +35,10 @@ class AdminUsersMain extends Component {
   handleAdminArea(adminArea) {
     switch (adminArea) {
       case 'user-create':
-        return <AdminUserCreate />;
+        return <AdminUserCreate history={history} />;
 
       case 'users':
-        return <AdminUsers />;
+        return <AdminUsers history={history} />;
     }
   }
 

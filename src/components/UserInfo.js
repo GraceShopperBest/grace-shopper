@@ -8,159 +8,176 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
-
-
-
 class UserInfo extends Component {
-
   constructor() {
     super();
     this.state = {
-        user: {
-            firstName: '',
-            lastName: '',
-            email: '',
-            userName: '',
-            password: ''
-        },
-        status: '',
-    }
+      user: {
+        firstName: '',
+        lastName: '',
+        email: '',
+        userName: '',
+        password: '',
+        address: '',
+      },
+      status: '',
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-}
+  }
 
-componentDidMount() {
+  componentDidMount() {
     const { user } = this.props;
 
-    if(!user) {
-        return null;
+    if (!user) {
+      return null;
     }
 
-    this.setState({ user })
-}
+    this.setState({ user });
+  }
 
-componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps) {
     const { user } = this.props;
 
-    if(prevProps !== this.props) {
-        this.setState({ user })
+    if (prevProps !== this.props) {
+      this.setState({ user });
     }
-}
+  }
 
-handleChange(event) {
-    const user = Object.assign({}, this.state.user, { [event.target.name]: event.target.value })
-    this.setState({ user })
-}
+  handleChange(event) {
+    const user = Object.assign({}, this.state.user, {
+      [event.target.name]: event.target.value,
+    });
+    this.setState({ user });
+  }
 
-handleSubmit(event) {
+  handleSubmit(event) {
     const { onUpdateUser } = this.props;
 
     event.preventDefault();
     // this.confirmPassword();
     onUpdateUser(this.state.user);
-    this.setState({ status: 'Account Updated!' })
-}
+    this.setState({ status: 'Account Updated!' });
+  }
 
-// confirmPassword() {
-//     const password = document.getElementById('password').value;
-//     // const password1 = document.getElementById('password1').value;
-//     // const password2 = document.getElementById('password2').value;
+  // confirmPassword() {
+  //     const password = document.getElementById('password').value;
+  //     // const password1 = document.getElementById('password1').value;
+  //     // const password2 = document.getElementById('password2').value;
 
-//     // if(password1 === password2) {
-//     //    this.setState({ password: 'test' })
-//     //     console.log(password1)
-//     // };
-//     console.log(password === this.state.user.password)
-// }
+  //     // if(password1 === password2) {
+  //     //    this.setState({ password: 'test' })
+  //     //     console.log(password1)
+  //     // };
+  //     console.log(password === this.state.user.password)
+  // }
 
-render() {
-  const { handleChange, handleSubmit } = this;
-  const { firstName, lastName, email, userName, password } = this.state.user;
-  const { status } = this.state;
+  render() {
+    const { handleChange, handleSubmit } = this;
+    const {
+      firstName,
+      lastName,
+      email,
+      userName,
+      password,
+      address,
+    } = this.state.user;
+    const { status } = this.state;
 
-  return (
+    return (
+      <Fragment>
+        <Typography variant="h2" gutterBottom style={{ color: 'dodgerblue' }}>
+          My Account
+        </Typography>
 
-    <Fragment>
+        <Typography variant="subtitle1" style={{ color: 'green' }} gutterBottom>
+          {status}
+        </Typography>
 
-      <Typography
-        variant="h2"
-        gutterBottom
-        style={{ color: 'dodgerblue' }}
-      >
-        My Account
-      </Typography>
+        <br />
+        <br />
 
-      <Typography variant="subtitle1" style={{ color: 'green' }}gutterBottom>{ status }</Typography>
+        <Typography variant="h4" gutterBottom>
+          Profile
+        </Typography>
 
-      <br />
-      <br />
-
-      <Typography variant="h4" gutterBottom>Profile</Typography>
-
-      <form onSubmit={ handleSubmit } >
-
-        <Grid container justify="flex-start" spacing={16}>
-
+        <form onSubmit={handleSubmit}>
+          <Grid container justify="flex-start" spacing={16}>
             <Grid item>
-                <TextField
-                    required
-                    name="firstName"
-                    label="first name"
-                    margin="normal"
-                    variant="filled"
-                    value={ firstName }
-                    onChange={ handleChange }
-                />
+              <TextField
+                required
+                name="firstName"
+                label="first name"
+                margin="normal"
+                variant="filled"
+                value={firstName}
+                onChange={handleChange}
+              />
             </Grid>
 
             <Grid item>
-                <TextField
-                    required
-                    name="lastName"
-                    label="last name"
-                    margin="normal"
-                    variant="filled"
-                    value={ lastName }
-                    onChange={ handleChange }
-                />
+              <TextField
+                required
+                name="lastName"
+                label="last name"
+                margin="normal"
+                variant="filled"
+                value={lastName}
+                onChange={handleChange}
+              />
             </Grid>
+          </Grid>
+          <Grid container justify="flex-start" spacing={16}>
+            <Grid item>
+              <TextField
+                required
+                name="email"
+                label="email"
+                margin="normal"
+                variant="filled"
+                value={email}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                required
+                name="address"
+                label="address"
+                margin="normal"
+                variant="filled"
+                value={address}
+                onChange={handleChange}
+              />
+            </Grid>
+          </Grid>
 
-        </Grid>
+          <br />
+          <br />
+          <br />
+          <br />
 
-        <TextField
-          required  
-          name="email"
-          label="email"
-          margin="normal"
-          variant="filled"
-          value={ email }
-          onChange={ handleChange }
-        />
+          <Typography variant="h4" gutterBottom>
+            Login / Security
+          </Typography>
 
-        <br />
-        <br />
-        <br />
-        <br />
-
-        <Typography variant="h4" gutterBottom>Login / Security</Typography>
-
-        <TextField
+          <TextField
             required
             name="username"
             label="username"
             margin="normal"
             variant="filled"
-            value={ userName }
-            onChange={ handleChange }
-        />
+            value={userName}
+            onChange={handleChange}
+          />
 
-        <br />
-        <br />
+          <br />
+          <br />
 
-        {/* <Typography variant="subtitle1" style={{ color: 'red' }}gutterBottom>Change Password</Typography> */}
+          {/* <Typography variant="subtitle1" style={{ color: 'red' }}gutterBottom>Change Password</Typography> */}
 
-        <TextField
+          <TextField
             required
             id="password"
             name="password"
@@ -168,11 +185,11 @@ render() {
             type="password"
             margin="normal"
             variant="filled"
-            value={ password }
-            onChange={ handleChange }
-        />
+            value={password}
+            onChange={handleChange}
+          />
 
-        {/* <Grid container justify="flex-start" spacing={16}>
+          {/* <Grid container justify="flex-start" spacing={16}>
         
             <Grid item>
                 <TextField
@@ -204,38 +221,28 @@ render() {
 
           </Grid> */}
 
-        <br/>
-        <br/>
+          <br />
+          <br />
 
-    <Button
-        type="submit"
-        variant="contained"
-        color="primary" 
-    >
-        Save
-    </Button>
-
+          <Button type="submit" variant="contained" color="primary">
+            Save
+          </Button>
         </form>
 
-        <br/>
-        <br/>
-
+        <br />
+        <br />
       </Fragment>
-    )
-
+    );
   }
-
 }
-
 
 const mapDispatchToProps = dispatch => {
-return {
-    onUpdateUser: (user) => dispatch(updateUser(user))
-  }
-}
+  return {
+    onUpdateUser: user => dispatch(updateUser(user)),
+  };
+};
 
-export default connect(null, mapDispatchToProps)(UserInfo);
-
-
-
-
+export default connect(
+  null,
+  mapDispatchToProps
+)(UserInfo);

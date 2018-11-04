@@ -15,7 +15,6 @@ class AdminTopNav extends Component {
       value: 0,
     };
 
-
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -56,7 +55,9 @@ class AdminTopNav extends Component {
         <div style={{ height: '50px' }} />
 
         {value === 0 && <AdminHome />}
-        {value === 1 && <AdminUsersMain location={location} history={history} match={match}/>}
+        {value === 1 && (
+          <AdminUsersMain location={location} history={history} match={match} />
+        )}
         {value === 2 && (
           <AdminProductMain
             location={location}
