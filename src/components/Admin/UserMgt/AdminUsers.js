@@ -79,7 +79,7 @@ class AdminUsers extends Component {
   render() {
     const { handleChange, handleSubmit, handleShowAllUsers } = this;
     const { search } = this.state;
-    const { users } = search !== null ? this.state : this.props;
+    const { users } = search !== '' ? this.state : this.props;
     return (
       <Fragment>
         <Typography variant="h2" gutterBottom style={{ color: 'dodgerblue' }}>

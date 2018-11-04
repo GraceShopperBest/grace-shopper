@@ -75,19 +75,25 @@ class App extends Component {
             />
 
             <Route
-              exact path="/admins/product-create"
+              exact
+              path="/admins/product-create"
               component={AdminTopNav}
             />
             <Route
-              exact path="/admins/product-search"
+              exact
+              path="/admins/product-search"
               component={AdminTopNav}
             />
             <Route exact path="/admins/products/:id" component={AdminTopNav} />
             <Route exact path="/admins/orders" component={AdminTopNav} />
             <Route exact path="/admins" component={AdminTopNav} />
-            <Route exact path="/admins/user-create" component={AdminTopNav} />
+            <Route
+              exact
+              path="/admins/user-create"
+              render={({ history }) => <AdminUserCreate history={history} />}
+            />
             <Route exact path="/admins/users" component={AdminTopNav} />
-
+            <Route path="/admins/users/:id" component={AdminUserUpdate} />
             <Route exact path="/products" component={Products} />
             <Route path="/products/:id" component={ProductDetails} />
             <Route path="/cart" component={Cart} />
