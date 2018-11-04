@@ -65,7 +65,7 @@ class AdminProductCreate extends Component {
     const product = Object.assign({}, this.state.product, {
       [event.target.name]: event.target.value,
     });
-    product.images = `${primaryImageUrl}, ${image1}, ${image2}, ${image3}`;
+    product.images = `${image1}, ${image2}, ${image3}`;
     this.setState({ product });
   }
 

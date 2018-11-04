@@ -74,7 +74,7 @@ Product.afterValidate(product => {
   }
 
   if(typeof product.images === 'string') {
-    product.images = product.images.split(', ')
+    product.images = product.images.split(', ').filter(image => image !== '')
   }
 
 })
