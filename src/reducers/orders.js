@@ -1,20 +1,21 @@
 import axios from 'axios'
+import {
+    GET_ORDERS,
+    RESET_ORDERS,
+    CREATE_ORDER,
+    UPDATE_ORDER,
+    CREATE_LINEITEM,
+    DELETE_LINEITEM,
+    UPDATE_LINEITEM,
+    _getOrders,
+    _resetOrders,
+    _createOrder,
+    _updateOrder,
+    _createLineItem,
+    _deleteLineItem,
+    _updateLineItem
+} from './constants/orderActions';
 
-const GET_ORDERS = 'GET_ORDERS'
-const RESET_ORDERS = 'RESET_ORDERS'
-const CREATE_ORDER = 'CREATE_ORDER'
-const UPDATE_ORDER = 'UPDATE_ORDER'
-const CREATE_LINEITEM = 'CREATE_LINEITEM'
-const DELETE_LINEITEM = 'DELETE_LINEITEM'
-const UPDATE_LINEITEM = 'UPDATE_LINEITEM'
-
-const _getOrders = (orders) => ({ type: GET_ORDERS, orders })
-const _resetOrders = () => ({ type: RESET_ORDERS })
-const _createOrder = (order) => ({ type: CREATE_ORDER, order })
-const _updateOrder = (order) => ({ type: UPDATE_ORDER, order })
-const _createLineItem = (cartId, lineItem) => ({ type: CREATE_LINEITEM, cartId, lineItem })
-const _deleteLineItem = (cartId, itemId) => ({ type: DELETE_LINEITEM, cartId, itemId })
-const _updateLineItem = (cartId, lineItem) => ({ type: UPDATE_LINEITEM, cartId, lineItem })
 
 const getOrders = (userId) => {
     return (dispatch) => {

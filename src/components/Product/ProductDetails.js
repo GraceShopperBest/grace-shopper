@@ -10,20 +10,21 @@ import {
   Divider
 } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getProductById } from './../utils';
+import { getProduct } from './../../utils';
 import {
   createCart,
   getCartWithItems,
   createLineItemInCart,
   updateLineItemInCart,
-} from '../store';
+} from './../../store';
 import ProductImageCarousel from './ProductImageCarousel';
-import ItemQuantity from './ItemQuantity';
-import Reviews from './Reviews';
+import ItemQuantity from './../ItemQuantity';
+import Reviews from './../Review/Reviews';
 
 class ProductDetail extends Component {
   constructor(props) {
     super(props);
+    this.state = this.props.product || {}
     this.handleAddToCart = this.handleAddToCart.bind(this);
   }
 
@@ -143,9 +144,9 @@ const mapStateToProps = (
   { orders, products, authenticatedUser, reviews, localCart },
   { match }
 ) => {
-  const id = parseInt(match.params.id);
   return {
-    product: getProductById(products, id),
+    products,
+    product: getProduct(match.params.id*1, products),
     cart: getCartWithItems(orders, products, localCart),
     userId: authenticatedUser.id,
     reviews,

@@ -1,20 +1,11 @@
 import axios from 'axios';
+import {
+  GET_REVIEWS,
+  CREATE_REVIEW,
+  _getReviews,
+  _createReview
+} from './constants/reviewActions';
 
-const GET_REVIEWS = 'GET_REVIEWS';
-const CREATE_REVIEW = 'CREATE_REVIEW';
-
-const _getReviews = reviews => {
-  return {
-    type: GET_REVIEWS,
-    reviews,
-  };
-};
-const _createReview = review => {
-  return {
-    type: CREATE_REVIEW,
-    review,
-  };
-};
 
 export const getReviews = () => {
   return dispatch => {

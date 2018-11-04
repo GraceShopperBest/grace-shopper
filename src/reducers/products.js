@@ -1,49 +1,42 @@
 import axios from 'axios';
+import {
+  GET_PRODUCTS,
+  ADD_PRODUCT,
+  UPDATE_PRODUCT,
+  DELETE_PRODUCT,
+  _getProducts,
+  _addProduct,
+  _updateProduct,
+  _deleteProduct
+} from './constants/productActions';
 
-// action constants
-const GET_PRODUCTS = 'GET_PRODUCTS';
-const ADD_PRODUCT = 'ADD_PRODUCT';
-const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
-const DELETE_PRODUCT = 'DELETE_PRODUCT';
-
-// action creators
-const _getProducts = products => {
-  return {
-    type: GET_PRODUCTS,
-    products
-  }
-}
-
-const _addProduct = product => {
-  return {
-    type: ADD_PRODUCT,
-    product
-  }
-}
-
-const _updateProduct = product => {
-  return {
-    type: UPDATE_PRODUCT,
-    product
-  }
-}
-
-const _deleteProduct = product => {
-  return {
-    type: DELETE_PRODUCT,
-    product
-  }
-}
 
 // thunks
+const getPagedProducts = (index, category) => {
+  return (dispatch) => {
+    if(category==='All'){
+      return axios.get(`/api/products/page/${index}`)
+      .then(res => res.data)
+      .then(products => dispatch(_getProducts(products)))
+      .catch(error => console.log(error))
+    } else {
+      return axios.get(`/api/products/categories/${category}/page/${index}`)
+      .then(res => res.data)
+      .then(products => dispatch(_getProducts(products)))
+      .catch(error => console.log(error))
+    }
+
+  };
+};
+
 const getProducts = () => {
   return (dispatch) => {
-    return axios.get('/api/products')
+    return axios.get(`/api/products`)
       .then(res => res.data)
       .then(products => dispatch(_getProducts(products)))
       .catch(error => console.log(error))
   };
-};
+}
 
 const addProduct = (product) => {
   return (dispatch) => {
@@ -70,37 +63,6 @@ const deleteProduct = (product, history) => {
   }
 };
 
-
-const getProduct = (id, products) => {
-  return products.find(product => product.id === id)
-}
-
-const getCategories = (products) => {
-  return products.reduce(
-    (result, product) => {
-      product.categories.forEach(category => {
-        if (!result.includes(category)) {
-          result.push(category);
-        }
-      });
-      return result;
-    },
-    ['All']
-  );
-};
-
-const getProductByCategory = (category, products) => {
-  if(category === 'All') { return products; }
-  return products.reduce(
-    (result, product) => {
-        if (product.categories.includes(category)) {
-          result.push(product);
-        }
-      return result;
-    },
-    []
-  );
-};
 
 // reducer
 const productReducer = (state = [], action) => {
@@ -135,7 +97,5 @@ export {
   addProduct,
   updateProduct,
   deleteProduct,
-  getProduct,
-  getCategories,
-  getProductByCategory
+  getPagedProducts
 }

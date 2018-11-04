@@ -19,7 +19,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Review from './Review';
-import { createReview } from './../store';
+import { createReview } from './../../store';
 
 class Reviews extends Component {
   constructor(props) {

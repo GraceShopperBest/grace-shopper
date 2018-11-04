@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import classnames from 'classnames';
@@ -15,7 +15,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
-class ProductCard extends React.Component {
+class ProductCard extends Component {
   state = { expanded: false };
 
   handleExpandClick = () => {

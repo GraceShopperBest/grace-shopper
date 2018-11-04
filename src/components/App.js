@@ -11,8 +11,9 @@ import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Nav from './Nav';
 import User from './User';
-import Products from './Products';
-import ProductDetails from './ProductDetails';
+import Products from './Product/Products';
+import PagedProducts from './Product/PagedProducts';
+import ProductDetails from './Product/ProductDetails';
 import Home from './Home';
 import Login from './Login';
 import RegisterUser from './RegisterUser';
@@ -95,6 +96,7 @@ class App extends Component {
             <Route exact path="/admins" component={AdminTopNav} />
 
             <Route exact path="/products" component={Products} />
+            <Route path="/:categories/products/page/:index?" component={PagedProducts} />
             <Route path="/products/:id" component={ProductDetails} />
             <Route path="/cart" component={Cart} />
             <Route

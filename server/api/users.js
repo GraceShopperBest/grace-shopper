@@ -36,6 +36,22 @@ router.delete("/:id", (req, res, next) => {
         .catch(next);
 });
 
+router.get('/count', (req, res, next) => {
+    User.findAndCountAll()
+      .then(count => res.send({ count }))
+      .catch(next);
+});
+
+router.get('/page/:index?', (req, res, next) => {
+    let index;
+    const limit = 10;
+    req.params.index ? index = req.params.index*1 : 0;
+    const offset = index*limit;
+    User.findAll({ limit, offset })
+      .then(users => res.send(users))
+      .catch(next);
+});
+
 /** Nested Routes to handle user orders **/
 
 //Gets the user orders

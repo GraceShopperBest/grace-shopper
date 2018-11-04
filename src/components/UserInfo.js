@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import { updateUser } from './../reducers/UserReducer';
+import { updateUser } from './../reducers/user';
 
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Grid , List, ListItem, ListItemLink, ListItemText} from '@material-ui/core'
 
-import { getUserById } from './../reducers/UserReducer';
+import { getUserById } from './../reducers/user';
 
 import UserInfo from './UserInfo';
 import UserOrders from './UserOrders';
